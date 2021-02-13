@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   int selectedImageIndex;
   bool showTimer;
   bool timerEnded;
-  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 20;
 
   @override
   void initState() {
@@ -293,6 +293,7 @@ class _MainScreenState extends State<MainScreen> {
                                         showTimer = false;
                                         timerEnded = true;
                                       });
+                                      displayAlertDialog(context, 'Timer completed');
                                     },
                                   ),
                                   Container(
@@ -359,10 +360,10 @@ class _MainScreenState extends State<MainScreen> {
                                             ? () {}
                                             : () {
                                           Future.delayed(
-                                            Duration(seconds: 1),
+                                            Duration(seconds: 3),
                                                 () => _key.currentState != null ?? _key.currentState.reset(),
                                           );
-                                          endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+                                          endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 20;
                                           setState(() {
                                             showTimer = true;
                                           });
@@ -401,5 +402,49 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget loadingAnimation() => Center(child: CupertinoActivityIndicator());
+  void displayAlertDialog(
+      BuildContext context,
+      String title,
+      ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                  Radius.circular(32.0),
+              )
+          ),
+          titlePadding: EdgeInsets.all(0),
+          title: Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(16.0),
+            color: Color(0xFF2E2E2E),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/done.png',
+                  height: 300,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                 'The timer has ended',
+                 style: TextStyle(
+                   color: Colors.white,
+                   fontFamily: 'Montserrat',
+                   fontWeight: FontWeight.w900,
+                   fontSize: 18,
+                 ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
