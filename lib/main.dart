@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/bloc/data_bloc.dart';
 import 'package:flutter_app/bloc/data_event.dart';
 import 'package:flutter_app/model/data_models/task_image.dart';
+import 'package:flutter_app/ui/confirmation_screen.dart';
 import 'package:flutter_app/ui/main_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,6 +46,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     PageController _myPage = PageController(initialPage: 0);
 
+    changePage() {
+      setState(() {
+        _myPage.jumpToPage(1);
+      });
+    }
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<DataBloc>(
@@ -62,9 +69,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  iconButton(CupertinoIcons.calendar),
+                  iconButton(CupertinoIcons.calendar, onPress: () {
+                    setState(() {
+                      _myPage.jumpToPage(0);
+                    });
+                  }),
                   showDivider(),
-                  iconButton(CupertinoIcons.bag),
+                  iconButton(
+                      CupertinoIcons.bag,
+                      onPress: () {
+                    setState(() {
+                      _myPage.jumpToPage(1);
+                    });
+                  }),
                   showDivider(),
                   iconButton(CupertinoIcons.chat_bubble_text),
                   showDivider(),
@@ -82,11 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             children: <Widget>[
               MainScreen(),
-              Center(
-                child: Container(
-                  child: Text('Empty Body 1'),
-                ),
-              ),
+              ConfirmationScreen(),
               Center(
                 child: Container(
                   child: Text('Empty Body 2'),
@@ -105,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget iconButton(IconData iconData) {
+  Widget iconButton(IconData iconData, {Function onPress}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: IconButton(
@@ -114,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
           iconData,
           color: Color(0xFF9298A2),
         ),
-        onPressed: () {},
+        onPressed: onPress != null ? onPress : () {},
       ),
     );
   }
