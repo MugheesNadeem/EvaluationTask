@@ -59,16 +59,19 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Expanded(
               child: Container(
                 color: Color(0xFF2E2E2E),
-                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     iconButton(CupertinoIcons.calendar),
+                    showDivider(),
                     iconButton(CupertinoIcons.bag),
+                    showDivider(),
                     iconButton(CupertinoIcons.chat_bubble_text),
+                    showDivider(),
                     iconButton(CupertinoIcons.bell),
+                    showDivider(),
                     iconButton(Icons.more_horiz)
                   ],
                 ),
@@ -106,12 +109,23 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget iconButton(IconData iconData) {
-    return IconButton(
-      iconSize: 30.0,
-      icon: Icon(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: IconButton(
+        iconSize: 30.0,
+        icon: Icon(
           iconData,
           color: Color(0xFF9298A2),
+        ),
       ),
+    );
+  }
+
+  Widget showDivider() {
+    return Container(
+        height: 30,
+        width: 1,
+        color: Color(0xFF9298A2)
     );
   }
 
