@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
             inAsyncCall: state is LoadingState,
             child: Container(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Stack(
@@ -129,7 +129,7 @@ class _MainScreenState extends State<MainScreen> {
                     padding: EdgeInsets.fromLTRB(24, 6, 24, 0),
                     color: Colors.white,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         getTextBox(
@@ -166,7 +166,7 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                               Expanded(
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     getTextBox(
@@ -204,6 +204,7 @@ class _MainScreenState extends State<MainScreen> {
                         child: Container(
                           padding: EdgeInsets.fromLTRB(24, 10, 18, 0),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
                                 children: [
@@ -222,7 +223,7 @@ class _MainScreenState extends State<MainScreen> {
                                   ),
                                   Expanded(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         getTextBox(
@@ -421,7 +422,7 @@ class _MainScreenState extends State<MainScreen> {
             padding: EdgeInsets.all(16.0),
             color: Color(0xFF2E2E2E),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
