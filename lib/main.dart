@@ -5,7 +5,6 @@ import 'package:flutter_app/bloc/data_event.dart';
 import 'package:flutter_app/model/data_models/task_image.dart';
 import 'package:flutter_app/ui/main_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/data_state.dart';
 
 void main() {
   runApp(MyApp());
@@ -56,25 +55,23 @@ class _MyHomePageState extends State<MyHomePage> {
       child: MaterialApp(
         home: Scaffold(
           bottomNavigationBar: BottomAppBar(
-            child: Expanded(
-              child: Container(
-                color: Color(0xFF2E2E2E),
-                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    iconButton(CupertinoIcons.calendar),
-                    showDivider(),
-                    iconButton(CupertinoIcons.bag),
-                    showDivider(),
-                    iconButton(CupertinoIcons.chat_bubble_text),
-                    showDivider(),
-                    iconButton(CupertinoIcons.bell),
-                    showDivider(),
-                    iconButton(Icons.more_horiz)
-                  ],
-                ),
+            child: Container(
+              color: Color(0xFF2E2E2E),
+              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  iconButton(CupertinoIcons.calendar),
+                  showDivider(),
+                  iconButton(CupertinoIcons.bag),
+                  showDivider(),
+                  iconButton(CupertinoIcons.chat_bubble_text),
+                  showDivider(),
+                  iconButton(CupertinoIcons.bell),
+                  showDivider(),
+                  iconButton(Icons.more_horiz)
+                ],
               ),
             ),
           ),
@@ -117,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
           iconData,
           color: Color(0xFF9298A2),
         ),
+        onPressed: () {},
       ),
     );
   }

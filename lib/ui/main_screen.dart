@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:slide_to_act/slide_to_act.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -22,12 +23,17 @@ class _MainScreenState extends State<MainScreen> {
   User user;
   Task task;
   int selectedImageIndex;
+  bool showTimer;
+  bool timerEnded;
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
 
   @override
   void initState() {
     setState(() {
       selectedImageIndex = 0;
     });
+    showTimer = false;
+    timerEnded = false;
 
     dataBloc = new DataBloc();
     dataBloc.add(FetchImagesEvent());
@@ -191,9 +197,9 @@ class _MainScreenState extends State<MainScreen> {
                       : SizedBox(),
                   user != null
                       ? Expanded(
-                        child: Card(
-                    elevation: 4,
-                    child: Container(
+                    child: Card(
+                      elevation: 4,
+                      child: Container(
                         width: double.infinity,
                         child: Container(
                           padding: EdgeInsets.fromLTRB(24, 10, 18, 0),
@@ -262,8 +268,56 @@ class _MainScreenState extends State<MainScreen> {
                                   margin: const EdgeInsets.symmetric(vertical: 15.0),
                                   width: double.infinity,
                                   color: Colors.grey),
-                              getTextBox(
-                                'Get your gear set up & ready to work.',
+                              showTimer
+                                  ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'TIMER',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  CountdownTimer(
+                                    endTime: endTime,
+                                    textStyle: TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.orange
+                                    ),
+                                    onEnd: () {
+                                      setState(() {
+                                        showTimer = false;
+                                        timerEnded = true;
+                                      });
+                                    },
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24),
+                                      color: Colors.black,
+                                      border: Border.all(
+                                        color: Colors.black,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    height: 40,
+                                    width: 40,
+                                    child: Icon(
+                                      CupertinoIcons.pause,
+                                      color: Colors.white,
+                                      size: 25,
+                                    ),
+                                  ),
+                                ],
+                              )
+                                  : getTextBox(
+                                timerEnded
+                                    ? 'The timer has ended'
+                                    : 'Get your gear set up & ready to work.',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Montserrat',
@@ -275,26 +329,43 @@ class _MainScreenState extends State<MainScreen> {
                                   builder: (context) {
                                     final GlobalKey<SlideActionState> _key = GlobalKey();
                                     return Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
                                       child: SlideAction(
-                                        sliderButtonIconPadding: 16,
+                                        sliderButtonIcon: Icon(
+                                          Icons.arrow_forward,
+                                          size: 30,
+                                          color: timerEnded ? Colors.black : Color(0xFFE2E8ED),
+                                        ),
+                                        reversed: timerEnded,
                                         sliderButtonIconSize: 30,
-                                        innerColor: Colors.black,
-                                        outerColor: Color(0xFFE2E8ED),
-                                        child: Text(
-                                          'SLIDE TO START WORK',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w500,
+                                        sliderButtonYOffset: -10,
+                                        innerColor: timerEnded ? Color(0xFFE2E8ED) : Colors.black,
+                                        outerColor: timerEnded ? Colors.black : Color(0xFFE2E8ED),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 24.0),
+                                          child: Text(
+                                            showTimer
+                                                ? 'SLIDE TO END WORK'
+                                                : 'SLIDE TO START WORK',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'Montserrat',
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
                                         ),
                                         key: _key,
-                                        onSubmit: () {
+                                        onSubmit: timerEnded
+                                            ? () {}
+                                            : () {
                                           Future.delayed(
                                             Duration(seconds: 1),
-                                                () => _key.currentState.reset(),
+                                                () => _key.currentState != null ?? _key.currentState.reset(),
                                           );
+                                          endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+                                          setState(() {
+                                            showTimer = true;
+                                          });
                                         },
                                       ),
                                     );
@@ -305,9 +376,9 @@ class _MainScreenState extends State<MainScreen> {
                             ],
                           ),
                         ),
+                      ),
                     ),
-                  ),
-                      )
+                  )
                       : SizedBox(),
 
                 ],

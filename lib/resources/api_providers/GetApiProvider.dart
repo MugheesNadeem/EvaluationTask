@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_app/model/api_responses/GetImagesApiResponse.dart';
 import 'package:http/http.dart' as http;
 
 class GetApiProvider {

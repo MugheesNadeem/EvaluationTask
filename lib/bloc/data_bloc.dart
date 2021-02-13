@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:flutter_app/model/api_responses/GetImagesApiResponse.dart';
 import 'package:flutter_app/model/data_models/task.dart';
 import 'package:flutter_app/model/data_models/task_image.dart';
 import 'package:flutter_app/model/data_models/user.dart';
@@ -13,7 +12,6 @@ class DataBloc extends Bloc<DataBlocEvent, DataBlocState> {
 
   DataBloc() : super(InitialDataState());
 
-  @override
   DataBlocState get initialState => InitialDataState();
 
   @override
