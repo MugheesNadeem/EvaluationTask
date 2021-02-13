@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/bloc/data_bloc.dart';
 import 'package:flutter_app/bloc/data_event.dart';
 import 'package:flutter_app/model/data_models/task_image.dart';
+import 'package:flutter_app/ui/main_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'bloc/data_state.dart';
 
 void main() {
@@ -43,49 +44,47 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(body: getWidget()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DataBloc>(
+          create: (BuildContext context) =>
+          new DataBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        home: Scaffold(
+          // appBar: AppBar(
+          //   title: Row(
+          //     crossAxisAlignment: CrossAxisAlignment.end,
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Icon(CupertinoIcons.house_fill),
+          //       SizedBox(
+          //         width: 10,
+          //       ),
+          //       Text('bnji.com'),
+          //     ],
+          //   ),
+          //   centerTitle: true,
+          // ),
+          body: MainScreen(),
+        ),
+      ),
     );
   }
 
   Widget getWidget() {
-    return BlocListener(
-        cubit: _dataBloc,
-        listener: (context, state) {
-          if (state is FetchedImagesState) {
-            taskImages = state.images;
-          }
-        },
-      child: BlocBuilder(
-        cubit: _dataBloc,
-        builder: (BuildContext context, DataState state) {
-          return Container(
-            child: Center(
-              child: Text(
-                'Test',
-              ),
-            ),
-          );
-        },
+    return Container(
+      child: Center(
+        child: Text(
+          'Test',
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+          ),
+        ),
       ),
     );
-    // return BlocConsumer<DataBloc, DataState>(
-    //   listener: (BuildContext context, DataState state) {
-    //     if (state is ErrorFetchingData) {
-    //     } else if (state is FetchedImagesState) {
-    //       taskImages = state.images;
-    //     }
-    //   },
-    //   builder: (BuildContext context, DataState state) {
-    //     return Container(
-    //       child: Center(
-    //         child: Text(
-    //           taskImages[0].taskImage,
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
   }
 }
 

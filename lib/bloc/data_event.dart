@@ -2,12 +2,12 @@ import 'dart:io';
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class DataEvent {}
+abstract class DataBlocEvent {}
 
-class FetchImagesEvent extends DataEvent {}
+class FetchImagesEvent extends DataBlocEvent {}
 
-class FetchTaskEvent extends DataEvent {}
+class FetchTaskEvent extends DataBlocEvent {}
 
-class FetchUserEvent extends DataEvent {}
+class FetchUserEvent extends DataBlocEvent {}
 
 

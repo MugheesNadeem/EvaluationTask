@@ -11,6 +11,9 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^6.1.1
   http: ^0.12.2
+  modal_progress_hud: ^0.1.3
+  carousel_slider: ^3.0.0
+  google_fonts: ^1.1.2
 
   cupertino_icons: ^1.0.0
 
@@ -19,6 +22,34 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+
+  fonts:
+    - family: QuickSand
+      fonts:
+        - asset: assets/fonts/QuickSand_Bold.ttf
+          weight: 900
+        - asset: assets/fonts/QuickSand_Light.ttf
+          weight: 800
+        - asset: assets/fonts/QuickSand_Medium.ttf
+          weight: 700
+        - asset: assets/fonts/QuickSand_Regular.ttf
+          weight: 600
+        - asset: assets/fonts/QuickSand_SemiBold.ttf
+          weight: 500
+
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat_Bold.ttf
+          weight: 900
+        - asset: assets/fonts/Montserrat_Light.ttf
+          weight: 800
+        - asset: assets/fonts/Montserrat_Medium.ttf
+          weight: 700
+        - asset: assets/fonts/Montserrat_Regular.ttf
+          weight: 600
+        - asset: assets/fonts/Montserrat_SemiBold.ttf
+          weight: 500
+
 
   uses-material-design: true
 

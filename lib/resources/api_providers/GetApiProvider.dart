@@ -2,19 +2,22 @@ import 'dart:convert';
 import 'package:flutter_app/model/api_responses/GetImagesApiResponse.dart';
 import 'package:http/http.dart' as http;
 
-class GetImagesApiProvider {
-  fetchData() async {
+class GetApiProvider {
+  Future<List> fetchData(String path) async {
     try {
       List list = new List();
-      final response = await http.get("https://jsonplaceholder.typicode.com/photos");
+      const _baseUrl = 'jsonplaceholder.typicode.com';
+      Uri uri = Uri.https(_baseUrl, path);
+      final response = await http.get(uri);
       if (response.statusCode == 200) {
         list = json.decode(response.body) as List;
-        return GetImagesApiResponse.fromJson(list);
+        return list;
       } else {
-        throw Exception('Failed to load photos');
+        throw Exception('Failed to load');
       }
     } catch (e) {
       print('Get Overview response: ${e.response?.data ?? e.toString()}');
     }
+    return null;
   }
 }

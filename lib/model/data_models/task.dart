@@ -3,7 +3,7 @@
 class Task {
   String title;
   String subtitle;
-  String timeDuration;
+  int timeDuration;
   String createdTime;
   String repetition;
 
