@@ -73,37 +73,32 @@ class _MainScreenState extends State<MainScreen> {
             inAsyncCall: state is LoadingState,
             child: Container(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      Container(
-                          child: CarouselSlider(
-                            options: CarouselOptions(
-                                enableInfiniteScroll: true,
-                                reverse: false,
-                                autoPlay: true,
-                                autoPlayInterval: Duration(seconds: 5),
-                                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                enlargeCenterPage: false,
-                                scrollDirection: Axis.horizontal,
-                                viewportFraction: 1,
-                                initialPage: selectedImageIndex,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    selectedImageIndex = index;
-                                  });
-                                }
-                            ),
-                            items: taskImages.map((item) =>
-                                Container(
-                                  width: SizeConfig.screenWidth,
-                                  child: Image.network(item.taskImage, fit: BoxFit.fill, width: double.infinity),
-                                )).toList(),
-                          )
+                      CarouselSlider(
+                        options: CarouselOptions(
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 5),
+                            autoPlayAnimationDuration: Duration(milliseconds: 800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enlargeCenterPage: false,
+                            scrollDirection: Axis.horizontal,
+                            viewportFraction: 1,
+                            initialPage: selectedImageIndex,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                selectedImageIndex = index;
+                              });
+                            }
+                        ),
+                        items: taskImages.map((item) =>
+                            Image.network(item.taskImage, fit: BoxFit.fill, width: double.infinity, height: double.infinity)).toList(),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -204,177 +199,185 @@ class _MainScreenState extends State<MainScreen> {
                         child: Container(
                           padding: EdgeInsets.fromLTRB(24, 10, 18, 0),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(top: 6, right: 18),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: taskImages != null && taskImages.length > 0
-                                          ? Image.network(
-                                        taskImages[0].taskImage,
-                                        width: 60,
-                                        height: 60,
-                                      )
-                                          : Icon(CupertinoIcons.info),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        getTextBox(
-                                          user.name,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                        getTextBox(
-                                          user.email,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Colors.black,
-                                      border: Border.all(
-                                        color: Colors.black,
-                                        width: 1,
+                              Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(top: 3, right: 18),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        child: taskImages != null && taskImages.length > 0
+                                            ? Image.network(
+                                          taskImages[0].taskImage,
+                                          width: 60,
+                                          height: 60,
+                                        )
+                                            : Icon(CupertinoIcons.info),
                                       ),
                                     ),
-                                    height: 40,
-                                    width: 40,
-                                    child: Icon(
-                                      CupertinoIcons.chat_bubble_text,
-                                      color: Colors.white,
-                                      size: 20,
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          getTextBox(
+                                            user.name,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'Montserrat',
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          getTextBox(
+                                            user.email,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'Montserrat',
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    Container(
+                                      margin: EdgeInsets.only(top: 12),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.black,
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      height: 40,
+                                      width: 40,
+                                      child: Icon(
+                                        CupertinoIcons.chat_bubble_text,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                               Container(
                                   height: 1,
-                                  margin: const EdgeInsets.symmetric(vertical: 15.0),
+                                  margin: const EdgeInsets.symmetric(vertical: 8.0),
                                   width: double.infinity,
                                   color: Colors.grey),
-                              showTimer
-                                  ? Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'TIMER',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  CountdownTimer(
-                                    endTime: endTime,
-                                    textStyle: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.orange
-                                    ),
-                                    onEnd: () {
-                                      setState(() {
-                                        showTimer = false;
-                                        timerEnded = true;
-                                      });
-                                      displayAlertDialog(context, 'Timer completed');
-                                    },
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(24),
-                                      color: Colors.black,
-                                      border: Border.all(
-                                        color: Colors.black,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    height: 40,
-                                    width: 40,
-                                    child: Icon(
-                                      CupertinoIcons.pause,
-                                      color: Colors.white,
-                                      size: 25,
-                                    ),
-                                  ),
-                                ],
-                              )
-                                  : getTextBox(
-                                timerEnded
-                                    ? 'The timer has ended'
-                                    : 'Get your gear set up & ready to work.',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              Expanded(
-                                child: Builder(
-                                  builder: (context) {
-                                    final GlobalKey<SlideActionState> _key = GlobalKey();
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
-                                      child: SlideAction(
-                                        sliderButtonIcon: Icon(
-                                          Icons.arrow_forward,
-                                          size: 30,
-                                          color: timerEnded ? Colors.black : Color(0xFFE2E8ED),
-                                        ),
-                                        reversed: timerEnded,
-                                        sliderButtonIconSize: 30,
-                                        sliderButtonYOffset: -10,
-                                        innerColor: timerEnded ? Color(0xFFE2E8ED) : Colors.black,
-                                        outerColor: timerEnded ? Colors.black : Color(0xFFE2E8ED),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(left: 24.0),
-                                          child: Text(
-                                            showTimer
-                                                ? 'SLIDE TO END WORK'
-                                                : 'SLIDE TO START WORK',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: 'Montserrat',
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                              Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    showTimer
+                                        ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'TIMER',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w700,
                                           ),
                                         ),
-                                        key: _key,
-                                        onSubmit: timerEnded
-                                            ? () {}
-                                            : () {
-                                          Future.delayed(
-                                            Duration(seconds: 3),
-                                                () => _key.currentState != null ?? _key.currentState.reset(),
-                                          );
-                                          endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 20;
-                                          setState(() {
-                                            showTimer = true;
-                                          });
-                                        },
+                                        CountdownTimer(
+                                          endTime: endTime,
+                                          textStyle: TextStyle(
+                                              fontSize: 20,
+                                              fontFamily: 'Montserrat',
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.orange
+                                          ),
+                                          onEnd: () {
+                                            setState(() {
+                                              showTimer = false;
+                                              timerEnded = true;
+                                            });
+                                            displayAlertDialog(context, 'Timer completed');
+                                          },
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(24),
+                                            color: Colors.black,
+                                            border: Border.all(
+                                              color: Colors.black,
+                                              width: 1,
+                                            ),
+                                          ),
+                                          height: 40,
+                                          width: 40,
+                                          child: Icon(
+                                            CupertinoIcons.pause,
+                                            color: Colors.white,
+                                            size: 25,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : getTextBox(
+                                      timerEnded
+                                          ? 'The timer has ended'
+                                          : 'Get your gear set up & ready to work.',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w900,
                                       ),
-                                    );
-                                  },
+                                    ),
+                                    Builder(
+                                      builder: (context) {
+                                        final GlobalKey<SlideActionState> _key = GlobalKey();
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                                          child: SlideAction(
+                                            sliderButtonIcon: Icon(
+                                              Icons.arrow_forward,
+                                              size: 30,
+                                              color: timerEnded ? Colors.black : Color(0xFFE2E8ED),
+                                            ),
+                                            reversed: timerEnded,
+                                            sliderButtonIconSize: 30,
+                                            sliderButtonYOffset: -10,
+                                            innerColor: timerEnded ? Color(0xFFE2E8ED) : Colors.black,
+                                            outerColor: timerEnded ? Colors.black : Color(0xFFE2E8ED),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 24.0),
+                                              child: Text(
+                                                showTimer
+                                                    ? 'SLIDE TO END WORK'
+                                                    : 'SLIDE TO START WORK',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                            key: _key,
+                                            onSubmit: timerEnded
+                                                ? () {}
+                                                : () {
+                                              Future.delayed(
+                                                Duration(seconds: 3),
+                                                    () => _key.currentState != null ?? _key.currentState.reset(),
+                                              );
+                                              endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 20;
+                                              setState(() {
+                                                showTimer = true;
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
-
                             ],
                           ),
                         ),
