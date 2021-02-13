@@ -9,7 +9,7 @@ import 'package:flutter_app/utils/size_config.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -120,54 +120,69 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   task != null
                       ? Container(
+                    padding: EdgeInsets.fromLTRB(24, 6, 24, 0),
                     color: Colors.white,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            task.title.replaceFirst(task.title[0], task.title[0].toUpperCase()),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 22,
-                                fontFamily: 'QuickSand',
-                                fontWeight: FontWeight.w900,
-                                color: Colors.green,
-                            ),
+                        getTextBox(
+                          task.title,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontFamily: 'QuickSand',
+                            fontWeight: FontWeight.w900,
+                            color: Colors.green,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            task.subtitle.replaceFirst(task.title[0], task.title[0].toUpperCase()),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w900,
-                            ),
+                        getTextBox(
+                          task.subtitle,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w900,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            task.timeDuration.toString(),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            task.createdTime,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            task.repetition,
+                        Container(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 6),
+                                child: Icon(
+                                  CupertinoIcons.calendar,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 16,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    getTextBox(
+                                      task.createdTime,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    getTextBox(
+                                      task.repetition,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -175,24 +190,124 @@ class _MainScreenState extends State<MainScreen> {
                   )
                       : SizedBox(),
                   user != null
-                      ? Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(
-                          user.name,
+                      ? Expanded(
+                        child: Card(
+                    elevation: 4,
+                    child: Container(
+                        width: double.infinity,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(24, 10, 18, 0),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(top: 6, right: 18),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: taskImages != null && taskImages.length > 0
+                                          ? Image.network(
+                                        taskImages[0].taskImage,
+                                        width: 60,
+                                        height: 60,
+                                      )
+                                          : Icon(CupertinoIcons.info),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        getTextBox(
+                                          user.name,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                        ),
+                                        getTextBox(
+                                          user.email,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.black,
+                                      border: Border.all(
+                                        color: Colors.black,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    height: 40,
+                                    width: 40,
+                                    child: Icon(
+                                      CupertinoIcons.chat_bubble_text,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                  height: 1,
+                                  margin: const EdgeInsets.symmetric(vertical: 15.0),
+                                  width: double.infinity,
+                                  color: Colors.grey),
+                              getTextBox(
+                                'Get your gear set up & ready to work.',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              Expanded(
+                                child: Builder(
+                                  builder: (context) {
+                                    final GlobalKey<SlideActionState> _key = GlobalKey();
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SlideAction(
+                                        sliderButtonIconPadding: 16,
+                                        sliderButtonIconSize: 30,
+                                        innerColor: Colors.black,
+                                        outerColor: Color(0xFFE2E8ED),
+                                        child: Text(
+                                          'SLIDE TO START WORK',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        key: _key,
+                                        onSubmit: () {
+                                          Future.delayed(
+                                            Duration(seconds: 1),
+                                                () => _key.currentState.reset(),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(
-                          user.email,
-                        ),
-                      ),
-                    ],
-                  )
+                    ),
+                  ),
+                      )
                       : SizedBox(),
 
                 ],
@@ -200,6 +315,18 @@ class _MainScreenState extends State<MainScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget getTextBox(String inputText, {TextStyle style}) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Text(
+        inputText.replaceFirst(inputText[0], inputText[0].toUpperCase()),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: style,
       ),
     );
   }

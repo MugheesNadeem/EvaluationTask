@@ -44,6 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    PageController _myPage = PageController(initialPage: 0);
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<DataBloc>(
@@ -53,22 +55,62 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
       child: MaterialApp(
         home: Scaffold(
-          // appBar: AppBar(
-          //   title: Row(
-          //     crossAxisAlignment: CrossAxisAlignment.end,
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       Icon(CupertinoIcons.house_fill),
-          //       SizedBox(
-          //         width: 10,
-          //       ),
-          //       Text('bnji.com'),
-          //     ],
-          //   ),
-          //   centerTitle: true,
-          // ),
-          body: MainScreen(),
+          bottomNavigationBar: BottomAppBar(
+            child: Expanded(
+              child: Container(
+                color: Color(0xFF2E2E2E),
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    iconButton(CupertinoIcons.calendar),
+                    iconButton(CupertinoIcons.bag),
+                    iconButton(CupertinoIcons.chat_bubble_text),
+                    iconButton(CupertinoIcons.bell),
+                    iconButton(Icons.more_horiz)
+                  ],
+                ),
+              ),
+            ),
+          ),
+          body: PageView(
+            controller: _myPage,
+            onPageChanged: (int) {
+              print('Page Changes to index $int');
+            },
+            children: <Widget>[
+              MainScreen(),
+              Center(
+                child: Container(
+                  child: Text('Empty Body 1'),
+                ),
+              ),
+              Center(
+                child: Container(
+                  child: Text('Empty Body 2'),
+                ),
+              ),
+              Center(
+                child: Container(
+                  child: Text('Empty Body 3'),
+                ),
+              )
+            ],
+            physics: NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget iconButton(IconData iconData) {
+    return IconButton(
+      iconSize: 30.0,
+      icon: Icon(
+          iconData,
+          color: Color(0xFF9298A2),
       ),
     );
   }

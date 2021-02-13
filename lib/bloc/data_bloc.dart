@@ -44,13 +44,13 @@ class DataBloc extends Bloc<DataBlocEvent, DataBlocState> {
       if (connectivityCheck) {
         try {
           yield LoadingState();
-          List getApiResponse = await repository.getData('/posts');
+          List getApiResponse = await repository.getData('/albums');
           Task task = new Task(
             title: getApiResponse[0]['title'],
-            subtitle: getApiResponse[0]['body'],
+            subtitle: getApiResponse[1]['title'],
             timeDuration: getApiResponse[0]['id'],
-            createdTime: getApiResponse[1]['title'],
-            repetition: getApiResponse[1]['body'],
+            createdTime: getApiResponse[2]['title'],
+            repetition: getApiResponse[3]['title'],
           );
           yield FetchedTaskState(task: task);
         } catch (e) {
